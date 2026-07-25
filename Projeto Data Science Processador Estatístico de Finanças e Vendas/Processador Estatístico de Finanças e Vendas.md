@@ -16,3 +16,11 @@ A diretoria da empresa solicitou uma ferramenta de análise para o fechamento de
 * **Novas Funcionalidades:**
   * Identificação da Maior Venda do dia.
   * Identificação da Menor Venda do dia.
+
+### 📌 Versão 3.0 - Processamento Dinâmico e Validação (Atual)
+* **Objetivo:** Permitir o processamento de lotes ilimitados de transações diárias com validação de dados de entrada.
+* **Novas Funcionalidades:**
+  * Controle dinâmico de fluxo com laço `while` (parada comandada pelo usuário).
+  * Validação de dados de entrada para impedir valores nulos ou negativos ($\le 0$).
+  * Lógica de inicialização de extrema baseada no contador de transações.
+  * Formatação de saída para exibições financeiras.

@@ -8,3 +8,4 @@ elif 15 <= idade <= 17:
 elif idade >= 18:
     print(f'Jogador com idade de {idade} anos A partir de 18 anos: Categoria PROFISSIONAL ')
 
+

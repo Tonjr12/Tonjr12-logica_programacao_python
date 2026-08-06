@@ -39,7 +39,7 @@ def ler_transacao():
         categoria = input('Digite a categoria do estabelecimento: ').strip().title()
         if categoria != '':
             break
-        print('❌ Ops! A categoria não pode ficar em branco.')   
+        print('❌ Ops! A categoria não pode ficar em branco.')
     return {
         'descricao': descricao,
         'reais': valor,

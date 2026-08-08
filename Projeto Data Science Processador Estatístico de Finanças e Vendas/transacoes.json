@@ -1,0 +1,22 @@
+[
+    {
+        "descricao": "A",
+        "reais": 34.0,
+        "categoria": "A"
+    },
+    {
+        "descricao": "Gasolina",
+        "reais": 300.0,
+        "categoria": "Posto"
+    },
+    {
+        "descricao": "Mercado",
+        "reais": 1000.0,
+        "categoria": "Compra"
+    },
+    {
+        "descricao": "G",
+        "reais": 56.0,
+        "categoria": "G"
+    }
+]

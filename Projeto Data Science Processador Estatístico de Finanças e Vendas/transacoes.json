@@ -3,5 +3,10 @@
         "descricao": "Shell",
         "reais": 100.0,
         "categoria": "Posto"
+    },
+    {
+        "descricao": "Mercado",
+        "reais": 694.0,
+        "categoria": "Alimenta\u00e7\u00e3o"
     }
 ]

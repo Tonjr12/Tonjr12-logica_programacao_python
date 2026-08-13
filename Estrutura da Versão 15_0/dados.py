@@ -1,11 +1,6 @@
 # Importa a biblioteca nativa do Python para trabalhar com arquivos no formato JSON (gravação e leitura de dados)
 import json
 
-# Imprime linhas de separação e o título do programa no terminal
-print('=' * 45)
-print('-' * 45)
-print('Processador Financeiro - Versão 14.0')
-
 
 # Define a função responsável por ler os dados salvos no arquivo JSON
 def carregar_dados(nome_arquivo='transacoes.json'):

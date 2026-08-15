@@ -13,5 +13,25 @@
         "descricao": "Rold\u00e3o",
         "reais": 294.0,
         "categoria": "Alimenta\u00e7\u00e3o"
+    },
+    {
+        "descricao": "Bel",
+        "reais": 100.0,
+        "categoria": "Mercado"
+    },
+    {
+        "descricao": "Isaac",
+        "reais": 100.0,
+        "categoria": "Jogos"
+    },
+    {
+        "descricao": "Ton",
+        "reais": 100.0,
+        "categoria": "Doces"
+    },
+    {
+        "descricao": "Carol",
+        "reais": 100.0,
+        "categoria": "Maquiagem"
     }
 ]

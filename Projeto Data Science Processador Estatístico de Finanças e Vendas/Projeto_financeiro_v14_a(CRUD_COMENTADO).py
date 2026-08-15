@@ -1,11 +1,14 @@
 # Importa a biblioteca nativa do Python para trabalhar com arquivos no formato JSON (gravação e leitura de dados)
 import json
-
+import unicodedata
 # Imprime linhas de separação e o título do programa no terminal
 print('=' * 45)
 print('-' * 45)
 print('Processador Financeiro - Versão 14.0')
 
+def normalizar(texto):
+    # Remove acentos e converte para minúsculas
+    return ''.join(c for c in unicodedata.normalize('NFD', texto) if unicodedata.category(c) != 'Mn').lower()
 
 # Define a função responsável por ler os dados salvos no arquivo JSON
 def carregar_dados(nome_arquivo='transacoes.json'):
@@ -28,6 +31,7 @@ def salvar_dados(lista, nome_arquivo='transacoes.json'):
 
 
 # Define a função para remover um lançamento cadastrado
+# Define a função para remover um lançamento cadastrado
 def remover_transacao(lista):
     # Verifica se a lista está vazia
     if len(lista) == 0:
@@ -36,28 +40,35 @@ def remover_transacao(lista):
 
     # Exibe o extrato numerado para o usuário ver quais opções existem
     mostrando_posicao(lista)
+    print('[ 0 ] Cancelar exclusão')  # Opção clara de saída
 
     # Loop para garantir que o usuário digite uma opção válida
     while True:
         try:
-            # Pede o número do item exibido na tela e converte para número inteiro
-            posicao = int(input('\nDigite o número da transação que deseja apagar: '))
+            # Pede o número do item exibido na tela ou 0 para sair
+            entrada = input('\nDigite o número da transação que deseja apagar (ou 0 para cancelar): ').strip()
 
-            # Trava de segurança: garante que o número digitado está no intervalo válido da lista (1 até o total de itens)
+            # Se o usuário apertar Enter ou digitar 0, cancelamos a operação
+            if entrada == '' or entrada == '0':
+                print('\n⚠️ Operação de exclusão cancelada.')
+                return
+
+            posicao = int(entrada)
+
+            # Trava de segurança: garante que o número digitado está no intervalo válido da lista
             if 1 <= posicao <= len(lista):
-                # Remove o item da lista ajustando o índice (o Python começa a contar do 0, por isso 'posicao - 1')
+                # Remove o item da lista ajustando o índice
                 removido = lista.pop(posicao - 1)
                 # Exibe a confirmação contendo o nome e valor do item que foi apagado
                 print(f"\n✅ Transação '{removido['descricao']}' no valor de R$ {removido['reais']:.2f} foi removida!")
                 break  # Sai do loop de validação após remover com sucesso
             else:
                 # Alerta caso o usuário digite um número fora da faixa existente
-                print(f'❌ Opção inválida! Digite um número de 1 a {len(lista)}.')
+                print(f'❌ Opção inválida! Digite um número de 1 a {len(lista)} (ou 0 para cancelar).')
 
         except ValueError:
             # Captura o erro caso o usuário digite texto/letras em vez de números inteiros
             print('❌ Ops! Digite apenas números inteiros.')
-
 
 # Define a função para editar uma transação existente (Update do CRUD)
 def editar_transacao(lista):
@@ -150,25 +161,40 @@ def calcular_estatisticas(lista):
 # Define a função responsável por formatar e exibir as transações na tela
 def mostrando_posicao(lista):
     if len(lista) > 0:
+        # Usamos <4 para o N° bater exatamente com a largura do "01°" (4 caracteres)
+        print(f'{"N°":<4} | {"Estabelecimento":<20} | {"Categoria":<12} | {"Valor"}')
+        print('-' * 56)  # Linha separadora ajustada
+
         # 'enumerate(..., start=1)' gera a numeração de 1 em 1 para a visualização do usuário
         for pos, ITEM in enumerate(lista, start=1):
-            # Formata cada linha com alinhamentos fixos (<20 alinha a esquerda com 20 espaços, :8.2f formata moeda)
-            print(f'{pos:02d}° | {ITEM["descricao"]:<20} | {ITEM["categoria"]:<12} | R$ {ITEM["reais"]:8.2f}')
+            # Formata cada linha com alinhamentos fixos
+            print(f'{pos:02d}° | {ITEM["descricao"]:<20} | {ITEM["categoria"]:<13} | R$ {ITEM["reais"]:8.2f}')
 
 
 # Define a função para cadastrar e validar uma nova transação individual
 def ler_transacao():
-    # Loop de validação do nome do estabelecimento (não aceita texto em branco)
+    print('\n--- CADASTRO DE TRANSAÇÃO (Digite 0 a qualquer momento para cancelar) ---')
+
+    # Loop de validação do nome do estabelecimento
     while True:
-        descricao = input('Digite o nome do estabelecimento: ').strip().title()
+        descricao = input('Digite o nome do estabelecimento (ou 0 para cancelar): ').strip()
+        if descricao == '0':
+            print('\n⚠️ Operação de cadastro cancelada.')
+            return None  # Retorna 'None' indicando que foi cancelado
         if descricao != '':
+            descricao = descricao.title()
             break  # Nome válido aceito
         print('❌ Ops! O nome não pode ficar em branco.')
 
     # Loop de validação do valor do gasto
     while True:
         try:
-            valor = float(input('Digite o valor do gasto: R$ '))
+            entrada_valor = input('Digite o valor do gasto: R$ ').strip()
+            if entrada_valor == '0':
+                print('\n⚠️ Operação de cadastro cancelada.')
+                return None
+
+            valor = float(entrada_valor)
             if valor <= 0:
                 print('❌ Ops! O valor deve ser maior que zero.')
             else:
@@ -179,8 +205,13 @@ def ler_transacao():
 
     # Loop de validação da categoria
     while True:
-        categoria = input('Digite a categoria do estabelecimento: ').strip().title()
+        categoria = input('Digite a categoria do estabelecimento (ou 0 para cancelar): ').strip()
+        if categoria == '0':
+            print('\n⚠️ Operação de cadastro cancelada.')
+            return None
+
         if categoria != '':
+            categoria = categoria.title()
             break  # Categoria válida aceita
         print('❌ Ops! A categoria não pode ficar em branco.')
 
@@ -190,23 +221,22 @@ def ler_transacao():
         'reais': valor,
         'categoria': categoria
     }
-
-
 # Define a função para filtrar transações por uma categoria específica
 def filtrar_por_categoria(lista):
     if len(lista) == 0:
         print('\n⚠️ Nenhuma transação registrada para filtrar!')
         return
 
-    # Captura o termo de busca convertendo para minúsculas para ignorar maiúsculas/minúsculas
-    busca = input('\nDigite a categoria que deseja buscar: ').strip().lower()
+    # Captura o termo de busca digitado pelo usuário
+    busca = input('\nDigite a categoria que deseja buscar: ').strip()
+    busca_limpa = normalizar(busca)
 
-    # Cria uma nova lista contendo apenas os itens cuja categoria seja igual ao termo buscado
-    filtrados = [t for t in lista if t['categoria'].lower() == busca]
+    # Filtra comparando os textos normalizados (sem acento, tudo minúsculo e aceitando pedaços da palavra)
+    filtrados = [t for t in lista if busca_limpa in normalizar(t['categoria'])]
 
     # Se a lista filtrada estiver vazia
     if len(filtrados) == 0:
-        print(f'\n⚠️ Nenhuma transação encontrada para a categoria "{busca.title()}".')
+        print(f'\n⚠️ Nenhuma transação encontrada para "{busca}".')
     else:
         # Exibe o cabeçalho do filtro e reutiliza a função mostrando_posicao para a sublista
         print(f'\n--- EXTRATO FILTRADO: {busca.title()} ---')
@@ -215,7 +245,6 @@ def filtrar_por_categoria(lista):
         # Soma e exibe o gasto total específico dessa categoria
         tot = sum(t["reais"] for t in filtrados)
         print(f'\nTOTAL DA CATEGORIA: R$ {tot:.2f}')
-
 
 # Define a função para agrupar e somar todos os gastos por categoria cadastrada
 def gerar_relatorio_sintetico(lista):
@@ -289,10 +318,14 @@ while True:
 
     # Opção 1: Cadastrar
     if opcao == '1':
-        item = ler_transacao()  # Coleta os dados digitados
-        transacao.append(item)  # Insere o novo dicionário na lista da memória RAM
-        salvar_dados(transacao) # Grava a lista atualizada no disco rígido (JSON)
-        print('💾 Transação salva com sucesso no disco!')
+        item = ler_transacao()  # Coleta os dados digitados ou retorna None se cancelado
+
+        # Só salva se o usuário não tiver cancelado (ou seja, se 'item' não for None)
+        if item is not None:
+            transacao.append(item)  # Insere o novo dicionário na lista da memória RAM
+            salvar_dados(transacao)  # Grava a lista atualizada no disco rígido (JSON)
+            print('💾 Transação salva com sucesso no disco!')
+
         input('\nPressione ENTER para voltar ao menu...')
 
     # Opção 2: Extrato Detalhado

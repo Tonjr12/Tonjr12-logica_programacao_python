@@ -1,19 +1,13 @@
-'''import os
-
-print("Tocando áudio...")
-# Lança o reprodutor nativo de mídia do Windows
-os.startfile('ex021ton.mp3')'''
-
 import pygame
 
-# 1. Inicializa o Pygame e o sistema de áudio
-pygame.init()
+# Inicializa o mixer do pygame para permitir a execução de áudios
 pygame.mixer.init()
 
-# 2. Carrega e toca o arquivo MP3
-pygame.mixer.music.load('ex021ton.mp3')
+# Carrega o arquivo MP3 localizado na mesma pasta do script
+pygame.mixer.music.load('ex018ton.mp3')
+
+# Inicia a reprodução do áudio carregado
 pygame.mixer.music.play()
 
-# 3. Mantém o script aberto até você dar ENTER
-input('Tocando áudio... Pression'
-      'e ENTER para encerrar.')
+# Mantém o programa em execução enquanto a música toca (sem o input, o script encerra imediatamente)
+input('Aperte ENTER para encerrar a música...')

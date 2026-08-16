@@ -3,5 +3,10 @@
         "descricao": "Compra",
         "reais": 100.0,
         "categoria": "Mercado"
+    },
+    {
+        "descricao": "Eduardo Castro",
+        "reais": 100.0,
+        "categoria": "Cybersecuryt"
     }
 ]

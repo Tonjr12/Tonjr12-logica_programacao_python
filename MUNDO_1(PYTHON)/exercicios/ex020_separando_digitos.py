@@ -13,3 +13,13 @@ print(f'Unidade: {unidade}')
 print(f'Dezena:  {dezena}')
 print(f'Centena: {centena}')
 print(f'Milhar:  {milhar}')
+print('-'*40)
+unidade = num // 1
+dezena = num // 10
+centena = num // 100
+milhar = num // 1000
+print(f'Unidade: {unidade}')
+print(f'Dezena:  {dezena}')
+print(f'Centena:  {centena}')
+print(f'Milhar:  {milhar}')
+

@@ -1,0 +1,16 @@
+# Exercício 022 — Procurando uma String dentro de Outra
+
+* **Objetivo:** Ler o nome completo de uma pessoa e dizer se ela tem "SILVA" no nome.
+* **Conceito Aplicado:** Tratamento de strings (`.strip()`, `.upper()`) e operador de pertencimento (`in`).
+
+### 💻 Código Solução
+
+```python
+# Solicita o nome completo e remove espaços desnecessários nas pontas
+nome = input('Digite seu nome completo: ').strip()
+
+# Converte o nome para maiúsculas e verifica se a palavra 'SILVA' está contida nele
+resultado = 'SILVA' in nome.upper()
+
+# Exibe True se o nome contiver 'SILVA' ou False se não contiver
+print(f'Seu nome tem "SILVA"? {resultado}')

@@ -57,3 +57,5 @@ else:
     print(f'Faturamento Total Líquido:      R$ {soma_total:.2f}')
     print(f'Média por Venda Registrada:      R$ {media_vendas:.2f}')
     print('=' * 60)
+
+    

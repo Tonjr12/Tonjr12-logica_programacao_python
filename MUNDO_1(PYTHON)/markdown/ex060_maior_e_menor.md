@@ -29,4 +29,4 @@ if cont > 0:
     media = soma / cont
     print(f'A média dos valores é {media}, e o menor valor é {menor} e o maior valor é {maior}')
 else:
-    print('Nenhum valor foi digitado')
+    print('Nenhum valor foi digitado').
